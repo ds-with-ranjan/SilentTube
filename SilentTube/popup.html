@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>SilentTube</title>
+  <link rel="stylesheet" href="popup.css" />
+</head>
+<body>
+
+  <!-- ── Header ─────────────────────────────────────────────── -->
+  <header class="header">
+    <div class="header-brand">
+      <svg class="logo" viewBox="0 0 36 36" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+        <!-- Stylised muted speaker / shield -->
+        <rect width="36" height="36" rx="10" fill="#1a1a1a"/>
+        <path d="M10 14h3l5-4v16l-5-4h-3v-8z" fill="#e63946"/>
+        <line x1="22" y1="13" x2="28" y2="23" stroke="#e63946" stroke-width="2.2" stroke-linecap="round"/>
+        <line x1="28" y1="13" x2="22" y2="23" stroke="#e63946" stroke-width="2.2" stroke-linecap="round"/>
+      </svg>
+      <div>
+        <span class="brand-name">SilentTube</span>
+        <span class="brand-version" id="ext-version">v1.0.0</span>
+      </div>
+    </div>
+
+    <!-- Global on/off toggle -->
+    <label class="master-toggle" title="Enable / Disable SilentTube">
+      <input type="checkbox" id="toggle-enabled" />
+      <span class="master-knob"></span>
+    </label>
+  </header>
+
+  <!-- ── Focus Mode Banner ───────────────────────────────────── -->
+  <section class="focus-banner" id="focus-banner">
+    <div class="focus-banner-content">
+      <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
+        <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"
+          stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+      </svg>
+      <span>Focus Mode</span>
+    </div>
+    <label class="toggle-wrap">
+      <input type="checkbox" id="toggle-focus" />
+      <span class="toggle-track">
+        <span class="toggle-thumb"></span>
+      </span>
+    </label>
+  </section>
+
+  <!-- ── Main body (disabled overlay) ──────────────────────── -->
+  <div class="body-wrap" id="body-wrap">
+
+    <!-- ── Distraction Blockers ────────────────────────────── -->
+    <section class="card">
+      <h2 class="section-title">Distraction Blockers</h2>
+
+      <div class="toggle-row">
+        <div class="toggle-info">
+          <span class="toggle-label">Hide Shorts</span>
+          <span class="toggle-desc">Remove Shorts shelf &amp; sidebar link</span>
+        </div>
+        <label class="toggle-wrap">
+          <input type="checkbox" id="toggle-shorts" />
+          <span class="toggle-track"><span class="toggle-thumb"></span></span>
+        </label>
+      </div>
+
+      <div class="toggle-row">
+        <div class="toggle-info">
+          <span class="toggle-label">Hide Recommended</span>
+          <span class="toggle-desc">Remove sidebar &amp; suggested videos</span>
+        </div>
+        <label class="toggle-wrap">
+          <input type="checkbox" id="toggle-recommended" />
+          <span class="toggle-track"><span class="toggle-thumb"></span></span>
+        </label>
+      </div>
+
+      <div class="toggle-row">
+        <div class="toggle-info">
+          <span class="toggle-label">Hide Home Feed</span>
+          <span class="toggle-desc">Block the algorithmic home page</span>
+        </div>
+        <label class="toggle-wrap">
+          <input type="checkbox" id="toggle-home" />
+          <span class="toggle-track"><span class="toggle-thumb"></span></span>
+        </label>
+      </div>
+
+      <div class="toggle-row">
+        <div class="toggle-info">
+          <span class="toggle-label">Hide Comments</span>
+          <span class="toggle-desc">Remove comment sections from videos</span>
+        </div>
+        <label class="toggle-wrap">
+          <input type="checkbox" id="toggle-comments" />
+          <span class="toggle-track"><span class="toggle-thumb"></span></span>
+        </label>
+      </div>
+
+      <div class="toggle-row">
+        <div class="toggle-info">
+          <span class="toggle-label">Hide Trending</span>
+          <span class="toggle-desc">Remove Trending tab from sidebar</span>
+        </div>
+        <label class="toggle-wrap">
+          <input type="checkbox" id="toggle-trending" />
+          <span class="toggle-track"><span class="toggle-thumb"></span></span>
+        </label>
+      </div>
+
+      <div class="toggle-row">
+        <div class="toggle-info">
+          <span class="toggle-label">Hide End Screens</span>
+          <span class="toggle-desc">Block post-video suggestions overlay</span>
+        </div>
+        <label class="toggle-wrap">
+          <input type="checkbox" id="toggle-endscreen" />
+          <span class="toggle-track"><span class="toggle-thumb"></span></span>
+        </label>
+      </div>
+
+      <div class="toggle-row">
+        <div class="toggle-info">
+          <span class="toggle-label">Disable Autoplay</span>
+          <span class="toggle-desc">Stop videos from auto-playing next</span>
+        </div>
+        <label class="toggle-wrap">
+          <input type="checkbox" id="toggle-autoplay" />
+          <span class="toggle-track"><span class="toggle-thumb"></span></span>
+        </label>
+      </div>
+    </section>
+
+    <!-- ── Study Mode ──────────────────────────────────────── -->
+    <section class="card">
+      <h2 class="section-title">Study Mode</h2>
+
+      <div class="toggle-row">
+        <div class="toggle-info">
+          <span class="toggle-label">Study Mode</span>
+          <span class="toggle-desc">Dims non-video content while watching</span>
+        </div>
+        <label class="toggle-wrap">
+          <input type="checkbox" id="toggle-study" />
+          <span class="toggle-track"><span class="toggle-thumb"></span></span>
+        </label>
+      </div>
+
+      <!-- Session Timer -->
+      <div class="timer-row" id="timer-row">
+        <span class="toggle-label">Session Timer</span>
+        <div class="timer-controls">
+          <select id="timer-select" class="timer-select">
+            <option value="0">Off</option>
+            <option value="25">25 min</option>
+            <option value="45">45 min</option>
+            <option value="60">60 min</option>
+            <option value="90">90 min</option>
+            <option value="120">2 hrs</option>
+          </select>
+          <button id="timer-start" class="timer-btn" title="Start timer">▶</button>
+        </div>
+      </div>
+
+      <!-- Live countdown -->
+      <div class="countdown-row" id="countdown-row" hidden>
+        <span class="countdown-label">Time remaining</span>
+        <span class="countdown-display" id="countdown-display">00:00</span>
+        <button id="timer-cancel" class="timer-cancel-btn">✕</button>
+      </div>
+    </section>
+
+    <!-- ── Channel Whitelist ────────────────────────────────── -->
+    <section class="card">
+      <h2 class="section-title">Channel Whitelist</h2>
+      <p class="section-desc">These channels bypass all blockers.</p>
+      <div class="whitelist-input-row">
+        <input
+          type="text"
+          id="whitelist-input"
+          class="whitelist-input"
+          placeholder="Channel name or handle…"
+          maxlength="80"
+        />
+        <button id="whitelist-add" class="whitelist-add-btn" title="Add channel">+</button>
+      </div>
+      <ul class="whitelist-list" id="whitelist-list"></ul>
+    </section>
+
+    <!-- ── Statistics ──────────────────────────────────────── -->
+    <section class="card stats-card">
+      <h2 class="section-title">Focus Statistics</h2>
+      <div class="stats-grid">
+        <div class="stat-item">
+          <span class="stat-value" id="stat-today">–</span>
+          <span class="stat-label">Today (min)</span>
+        </div>
+        <div class="stat-item">
+          <span class="stat-value" id="stat-week">–</span>
+          <span class="stat-label">This week (min)</span>
+        </div>
+        <div class="stat-item">
+          <span class="stat-value" id="stat-total">–</span>
+          <span class="stat-label">Total (min)</span>
+        </div>
+      </div>
+      <div class="stats-bar-wrap" id="stats-bar-wrap">
+        <!-- 7-day bar chart rendered by popup.js -->
+      </div>
+    </section>
+
+    <!-- ── Export / Import ─────────────────────────────────── -->
+    <section class="card">
+      <h2 class="section-title">Settings</h2>
+      <div class="settings-actions">
+        <button id="btn-export" class="action-btn">Export Settings</button>
+        <button id="btn-import" class="action-btn">Import Settings</button>
+        <button id="btn-reset"  class="action-btn danger">Reset All</button>
+      </div>
+      <input type="file" id="import-file" accept=".json" hidden />
+    </section>
+
+    <!-- ── Keyboard Shortcuts hint ─────────────────────────── -->
+    <footer class="shortcuts-footer">
+      <span><kbd>Alt</kbd>+<kbd>Shift</kbd>+<kbd>F</kbd> Focus Mode</span>
+      <span><kbd>Alt</kbd>+<kbd>Shift</kbd>+<kbd>S</kbd> Toggle on/off</span>
+    </footer>
+
+  </div><!-- /body-wrap -->
+
+  <script src="popup.js"></script>
+</body>
+</html>
